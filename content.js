@@ -382,5 +382,9 @@
  
  // Ensure the observer starts after the whole page is loaded.
  window.addEventListener('load', startObserver);
+
+  // Ensure the observer starts after the whole page is loaded.
+ // Ensure the observer starts after the whole page is loaded.
+
  
  
