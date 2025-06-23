@@ -1,6 +1,6 @@
 <!--
   This is the HTML for the extension's popup.
-  It provides a user interface to set custom colors for account names.
+  It provides a user interface to set custom colors and notes for account names.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            width: 300px;
+            width: 350px; /* Slightly wider to accommodate new field */
             padding: 15px;
             background-color: #f4f6f9;
             color: #333;
@@ -43,16 +43,21 @@
             font-size: 14px;
         }
 
-        input[type='text'], input[type='color'] {
+        input[type='text'], input[type='color'], textarea {
             padding: 8px;
             border-radius: 4px;
             border: 1px solid #ddd;
             width: 100%;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif; /* Ensure textarea uses consistent font */
         }
         input[type='color'] {
             height: 40px;
             padding: 2px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
         }
 
         button {
@@ -85,14 +90,37 @@
             border-radius: 4px;
             margin-bottom: 5px;
             font-size: 14px;
+            flex-wrap: wrap; /* Allow content to wrap */
         }
-
+        .rule-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1; /* Allow info to take available space */
+        }
         .rule-color-box {
             width: 20px;
             height: 20px;
             border-radius: 4px;
             border: 1px solid #eee;
             margin-right: 10px;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .rule-name-note {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .rule-name {
+            font-weight: 600;
+        }
+        .rule-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+            white-space: pre-wrap; /* Preserve line breaks */
+            max-height: 50px; /* Limit note display height in list */
+            overflow: hidden; /* Hide overflow */
+            text-overflow: ellipsis; /* Add ellipsis */
         }
 
         .delete-rule {
@@ -102,11 +130,12 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
+            margin-left: 10px; /* Space from note */
         }
     </style>
 </head>
 <body>
-    <h1>Account Color Rules</h1>
+    <h1>Account Color & Note Rules</h1>
     <div class="container">
         <div class="input-group">
             <label for="accountName">Account Name:</label>
@@ -116,8 +145,12 @@
             <label for="accountColor">Choose Color:</label>
             <input type="color" id="accountColor" value="#ffff00">
         </div>
-        <button id="addRule">Add Rule</button>
-        <button id="applyColors">Apply Colors on Page</button>
+        <div class="input-group">
+            <label for="accountNote">Note for Account:</label>
+            <textarea id="accountNote" placeholder="Add a short note to appear on hover..."></textarea>
+        </div>
+        <button id="addRule">Add/Update Rule</button>
+        <button id="applyColors">Apply Colors & Notes on Page</button>
     </div>
     <ul id="rulesList"></ul>
 
